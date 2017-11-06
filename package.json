@@ -6,6 +6,7 @@
     "muicss": "^0.9.28",
     "node-sass": "^4.6.0",
     "node-sass-chokidar": "0.0.3",
+    "public-ip": "^2.3.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-scripts-ts": "2.8.0"

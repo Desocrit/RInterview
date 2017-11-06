@@ -9,45 +9,16 @@ import Operator from '../operators/Operator';
 import CombinedWith from '../operators/CombinedWith';
 import { CalculatorState } from './Calculator';
 
+const publicIp = require('public-ip');
+
 interface AppProps {}
 
 interface AppState {
     logs: LogItemDetails[];
+    ip: string;
 }
 
 class App extends React.Component <AppProps, AppState> {
-    static testItems(): LogItemDetails[] {
-        return [{
-            date: new Date(),
-            author: 'bob',
-            leftOperand: 1.0,
-            operator: '-',
-            rightOperand: 1.0,
-            result: 45
-        }, {
-            date: new Date(),
-            author: 'bib',
-            leftOperand: 1.0,
-            operator: '+',
-            rightOperand: 1.0,
-            result: 45
-        }, {
-            date: new Date(),
-            author: 'bab',
-            leftOperand: 1.0,
-            operator: '*',
-            rightOperand: 1.0,
-            result: 45
-        }, {
-            date: new Date(),
-            author: 'bab',
-            leftOperand: 0.5,
-            operator: '/',
-            rightOperand: 0.5,
-            result: 12
-        }];
-    }
-
     static getOperators(): Operator[] {
         return [new Either() as Operator, new CombinedWith() as Operator];
     }
@@ -56,14 +27,16 @@ class App extends React.Component <AppProps, AppState> {
         super(props);
         this.onCalculate = this.onCalculate.bind(this);
         this.state = {
-            logs: App.testItems()
+            logs: [],
+            ip: 'unknown'
         };
+        publicIp.v4().then((ip: string) => this.setState({ip: ip}));
     }
 
     onCalculate(state: CalculatorState): void {
         let newItem: LogItemDetails = {
             date: new Date(),
-            author: 'TODO',
+            author: this.state.ip,
             leftOperand: state.leftOperand,
             operator: state.operator,
             rightOperand: state.rightOperand,

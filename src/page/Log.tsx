@@ -20,13 +20,11 @@ interface LogState {
 }
 
 class Log extends React.Component <LogProps, LogState> {
-    cache: CachedItems;
-
-    static createCache(items: LogItemDetails[]): CachedItems {
+    createCache(): CachedItems {
         let dates = new Set<string>();
         let operators = new Set<string>();
         let authors = new Set<string>();
-        for (let log of items) {
+        for (let log of this.props.items) {
             let dateStr: string = log.date.toLocaleDateString();
             dates.add(dateStr);
             operators.add(log.operator);
@@ -44,7 +42,6 @@ class Log extends React.Component <LogProps, LogState> {
         this.state = {
             filters: {}
         };
-        this.cache = Log.createCache(props.items);
         this.filterItem = this.filterItem.bind(this);
     }
 
@@ -82,18 +79,19 @@ class Log extends React.Component <LogProps, LogState> {
     }
 
     render() {
+        let cache = this.createCache();
         return (
             <div className="Log">
                 <div className="log-spacer" />
                 <div className="log-controls mui-col-sm-10 mui-col-sm-offset-1">
                     <div className="date mui-col-sm-5">
-                        {this.createPicker(this.cache.dates, 'Date')}
+                        {this.createPicker(cache.dates, 'Date')}
                     </div>
                     <div className="author mui-col-sm-3">
-                        {this.createPicker(this.cache.authors, 'Author')}
+                        {this.createPicker(cache.authors, 'Author')}
                     </div>
                     <div className="operator mui-col-sm-4">
-                        {this.createPicker(this.cache.operators, 'Operator')}
+                        {this.createPicker(cache.operators, 'Operator')}
                     </div>
                 </div>
                 <div className="filters mui-col-sm-10 mui-col-sm-offset-1">
