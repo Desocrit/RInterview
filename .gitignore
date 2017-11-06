@@ -8,6 +8,11 @@
 *.sln.docstates
 .idea/
 
+# SASS
+*.css
+*.css.map
+
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
