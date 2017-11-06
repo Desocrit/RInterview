@@ -22,7 +22,7 @@ class LogItem extends React.Component <LogItemProps> {
         return (
             <div className={'mui-col-xs-12 LogItem l' + (this.props.index + 1)}>
                 <div className="mui-col-xs-12 mui-col-sm-5">
-                    {dateFormat(this.props.details.date, 'yy/mm/dd - HH:MM')}
+                    {dateFormat(this.props.details.date, 'dd/mm/yy - HH:MM')}
                 </div>
                 <div className="mui-col-xs-12 mui-col-sm-3">
                     {this.props.details.author}

@@ -10,7 +10,7 @@ class App extends React.Component {
       <div className="App">
         <Header />
         <Calculator />
-        <Log items={[]}/>
+        <Log items={Log.testItems()} />
       </div>
     );
   }
