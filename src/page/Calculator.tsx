@@ -4,17 +4,21 @@ const Container = require('muicss/lib/react/container');
 const Input = require('muicss/lib/react/input');
 const Select = require('muicss/lib/react/select');
 const Option = require('muicss/lib/react/option');
+const Button = require('muicss/lib/react/button');
 const Panel = require('muicss/lib/react/panel');
 import './Calculator.css';
 
 interface CalculatorProps {
     operators: Operator[];
+    onCalculate: Function;
 }
 
-interface CalculatorState {
+export interface CalculatorState {
+    active: boolean;
     leftOperand: number;
     operator: string;
     rightOperand: number;
+    result: number;
 }
 
 class Calculator extends React.Component <CalculatorProps, CalculatorState> {
@@ -23,28 +27,33 @@ class Calculator extends React.Component <CalculatorProps, CalculatorState> {
         this.setLeftOperand = this.setLeftOperand.bind(this);
         this.setOperator = this.setOperator.bind(this);
         this.setRightOperand = this.setRightOperand.bind(this);
+        this.getResult = this.getResult.bind(this);
         this.state = {
+            active: false,
             leftOperand: 0,
             operator: this.props.operators[0].operator,
             rightOperand: 0,
-        }
+            result: this.props.operators[0].apply(0, 0)
+        };
     }
 
     setLeftOperand(event: HTMLSelectElement) {
-        this.setState({leftOperand: +event.target.value});
+        this.setState({leftOperand: +event.target.value, active: false});
     }
 
     setOperator(event: HTMLSelectElement) {
-        this.setState({operator: event.target.value});
+        this.setState({operator: event.target.value, active: false});
     }
 
     setRightOperand(event: HTMLSelectElement) {
-        this.setState({rightOperand: +event.target.value});
+        this.setState({rightOperand: +event.target.value, active: false});
     }
 
-    getResult(): number {
-        return this.props.operators.filter(v => v.operator === this.state.operator)[0]
+    getResult(): void {
+        let result = this.props.operators.filter(v => v.operator === this.state.operator)[0]
             .apply(this.state.leftOperand, this.state.rightOperand);
+        this.setState({result: result, active: true});
+        this.props.onCalculate(this.state);
     }
 
     render() {
@@ -66,7 +75,11 @@ class Calculator extends React.Component <CalculatorProps, CalculatorState> {
                         <Input defaultValue="0" onChange={this.setRightOperand} />
                     </div>
                     <div className="mui-col-xs-12 mui-col-lg-4 panel-holder">
-                        <Panel>{this.getResult()}</Panel>
+                        {
+                            this.state.active ?
+                                <Panel>{this.state.result}</Panel> :
+                                <Button variant="raised" onClick={this.getResult} > Solve </Button>
+                        }
                     </div>
                 </div>
             </Container>

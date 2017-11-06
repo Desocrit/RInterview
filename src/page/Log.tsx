@@ -23,9 +23,9 @@ class Log extends React.Component <LogProps, LogState> {
     cache: CachedItems;
 
     static createCache(items: LogItemDetails[]): CachedItems {
-        let dates = new Set <string> ();
-        let operators = new Set <string> ();
-        let authors = new Set <string> ();
+        let dates = new Set<string>();
+        let operators = new Set<string>();
+        let authors = new Set<string>();
         for (let log of items) {
             let dateStr: string = log.date.toLocaleDateString();
             dates.add(dateStr);
@@ -37,38 +37,6 @@ class Log extends React.Component <LogProps, LogState> {
             operators: Array.from(operators),
             authors: Array.from(authors)
         };
-    }
-
-    static testItems(): LogItemDetails[] {
-        return [{
-                    date: new Date(),
-                    author: 'bob',
-                    leftOperand: 1.0,
-                    operator: '-',
-                    rightOperand: 1.0,
-                    result: 45
-                }, {
-                    date: new Date(),
-                    author: 'bib',
-                    leftOperand: 1.0,
-                    operator: '+',
-                    rightOperand: 1.0,
-                    result: 45
-                }, {
-                    date: new Date(),
-                    author: 'bab',
-                    leftOperand: 1.0,
-                    operator: '*',
-                    rightOperand: 1.0,
-                    result: 45
-                }, {
-                    date: new Date(),
-                    author: 'bab',
-                    leftOperand: 0.5,
-                    operator: '/',
-                    rightOperand: 0.5,
-                    result: 12
-                }];
     }
 
     constructor(props: LogProps) {
