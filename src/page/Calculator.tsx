@@ -24,14 +24,22 @@ class Calculator extends React.Component <CalculatorProps, CalculatorState> {
         return (
             <Container fluid={true}>
                 <div className="panel-body mui-col-sm-10 mui-col-sm-offset-1">
-                    <Input defaultValue="1" />
-                    <Select name="operation" label="Select Operation">
-                        <Option name="CombinedWith" label="CombinedWith" />
-                        <Option name="Either" label="Either" />
-                        {/* TODO: Make this fluid */}
-                    </Select>
-                    <Input defaultValue="1" />
-                    <Panel>{this.state.value}</Panel>
+                    <div className="mui-col-xs-12 mui-col-sm-3 mui-col-lg-2">
+                        <Input defaultValue="1" />
+                    </div>
+                    <div className="mui-col-xs-12 mui-col-sm-6 mui-col-lg-4">
+                        <Select name="operation">
+                            <Option name="CombinedWith" label="CombinedWith" />
+                            <Option name="Either" label="Either" />
+                            {/* TODO: Make this fluid */}
+                        </Select>
+                    </div>
+                    <div className="mui-col-xs-12 mui-col-sm-3 mui-col-lg-2">
+                        <Input defaultValue="1" />
+                    </div>
+                    <div className="mui-col-xs-12 mui-col-lg-4 panel-holder">
+                        <Panel>{this.state.value}</Panel>
+                    </div>
                 </div>
             </Container>
         );
