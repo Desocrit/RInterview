@@ -15,8 +15,11 @@ interface CachedItems {
     authors: string[];
 }
 
-class Log extends React.Component <LogProps> {
+interface LogState {
+    filters: {[id: string]: string};
+}
 
+class Log extends React.Component <LogProps, LogState> {
     cache: CachedItems;
 
     static createCache(items: LogItemDetails[]): CachedItems {
@@ -70,7 +73,44 @@ class Log extends React.Component <LogProps> {
 
     constructor(props: LogProps) {
         super(props);
+        this.state = {
+            filters: {}
+        };
         this.cache = Log.createCache(props.items);
+        this.filterItem = this.filterItem.bind(this);
+    }
+
+    createUpdateClosure(key: string): Function {
+        return (event: HTMLSelectElement) => this.update(key, event.target.value);
+    }
+
+    update(key: string, value: string): void {
+        let currentFilters = this.state.filters;
+        if (value === 'Any') {
+            delete currentFilters[key];
+        } else {
+            currentFilters[key] = value;
+        }
+        this.setState({
+            filters: currentFilters
+        });
+    }
+
+    createPicker(items: string[], name: string): JSX.Element {
+        return (
+            <Select label={name} onChange={this.createUpdateClosure(name)}>
+                <Option key="any" name="any" label="Any" />
+                {items.map(i =>
+                    <Option key={i} name={i} label={i} />
+                )}
+            </Select>
+        );
+    }
+
+    filterItem(item: LogItemDetails) {
+        return (!this.state.filters.Author || this.state.filters.Author === item.author)
+            && (!this.state.filters.Date || this.state.filters.Date === item.date.toLocaleDateString())
+            && (!this.state.filters.Operator || this.state.filters.Operator === item.operator);
     }
 
     render() {
@@ -78,34 +118,18 @@ class Log extends React.Component <LogProps> {
             <div className="Log">
                 <div className="log-spacer" />
                 <div className="log-controls mui-col-sm-10 mui-col-sm-offset-1">
-                    <div className="mui-col-sm-5">
-                        <Select label="Date">
-                            <Option key="any" name="any" label="Any" />
-                            {this.cache.dates.map(date =>
-                                <Option key={date} name={date} label={date} />
-                            )}
-                        </Select>
+                    <div className="date mui-col-sm-5">
+                        {this.createPicker(this.cache.dates, 'Date')}
                     </div>
-                    <div className="mui-col-sm-3">
-                        <Select label="Author">
-                            <Option key="any" name="any" label="Any" />
-                            {this.cache.authors.map(author =>
-                                <Option key={author} name={author} label={author} />
-                            )}
-                        </Select>
+                    <div className="author mui-col-sm-3">
+                        {this.createPicker(this.cache.authors, 'Author')}
                     </div>
-                    <div className="mui-col-sm-4">
-                        <Select label="Operator">
-                            <Option key="any" name="any" label="Any" />
-                            {this.cache.operators.map(operator =>
-                                <Option key={operator} name={operator} label={operator} />
-                            )}
-                        </Select>
+                    <div className="operator mui-col-sm-4">
+                        {this.createPicker(this.cache.operators, 'Operator')}
                     </div>
-
                 </div>
                 <div className="filters mui-col-sm-10 mui-col-sm-offset-1">
-                    {this.props.items.map((l, i) =>
+                    {this.props.items.filter(this.filterItem).map((l, i) =>
                         <LogItem index={i} details={l} key={i}/>
                     )}
                 </div>
