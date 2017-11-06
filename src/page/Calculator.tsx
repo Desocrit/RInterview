@@ -22,7 +22,7 @@ class Calculator extends React.Component <CalculatorProps, CalculatorState> {
 
     render() {
         return (
-            <Container fluid={true}>
+            <Container fluid={true} className="calculator">
                 <div className="panel-body mui-col-sm-10 mui-col-sm-offset-1">
                     <div className="mui-col-xs-12 mui-col-sm-3 mui-col-lg-2">
                         <Input defaultValue="1" />
