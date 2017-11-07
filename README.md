@@ -31,3 +31,4 @@
 * Deadlock could be formed if multiple server threads hog the lock on the log file.
 * Error handling on the client side is somewhat poor - many errors are not fixed.
   This could be improved by falling back to client side code if server requests fail.
+* Everything was committed on master.
