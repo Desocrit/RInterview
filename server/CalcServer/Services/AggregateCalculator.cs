@@ -20,7 +20,7 @@ namespace CalcServer.Services
         }
 
         /// <inheritdoc />
-        public float Solve(CalculationCommand command)
+        public double Solve(CalculationCommand command)
         {
             IBinaryCalculation calculator = _strategies
                 .FirstOrDefault(x => x.Operation == command.Operation);

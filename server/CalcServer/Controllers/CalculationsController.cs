@@ -28,7 +28,7 @@ namespace CalcServer.Controllers
 
         [HttpGet]
         [Route]
-        public float Solve([FromUri] CalculationCommand command)
+        public double Solve([FromUri] CalculationCommand command)
             => _calculator.Solve(command);
 
         [HttpGet]

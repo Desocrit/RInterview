@@ -6,7 +6,7 @@
         public string Operation => "Either";
 
         /// <inheritdoc />
-        public float Apply(float leftOperand, float rightOperand)
+        public double Apply(double leftOperand, double rightOperand)
         {
             return leftOperand+rightOperand - leftOperand*rightOperand;
         }

@@ -7,7 +7,7 @@ namespace CalcServer.Models
     public class CalculationModel : CalculationCommand
     {
         /// <summary> Result of the calculation. </summary>
-        public float Result { get; set; }
+        public double Result { get; set; }
 
         /// <summary> User executing the calculation. </summary>
         public string Author { get; set; }
