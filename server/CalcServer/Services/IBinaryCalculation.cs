@@ -13,6 +13,6 @@
         /// <param name="leftOperand"> Left operand. </param>
         /// <param name="rightOperand"> Right operand. </param>
         /// <returns> Result of the calculation. </returns>
-        int Apply(int leftOperand, int rightOperand);
+        float Apply(float leftOperand, float rightOperand);
     }
 }

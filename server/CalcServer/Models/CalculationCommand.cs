@@ -6,12 +6,12 @@
     public class CalculationCommand
     {
         /// <summary> First of the values to be summated. </summary>
-        public int LeftOperand { get; set; }
+        public float LeftOperand { get; set; }
 
         /// <summary> Operation to perform. </summary>
         public string Operation { get; set; }
 
         /// <summary> Second of the values to be summated. </summary>
-        public int RightOperand { get; set; }
+        public float RightOperand { get; set; }
     }
 }

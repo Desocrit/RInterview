@@ -27,7 +27,7 @@ namespace CalcServer.Services
                 string[] parts = log.Split(' ');
                 return new CalculationModel
                 {
-                    Date = new DateTime(int.Parse(parts[0])),
+                    Date = DateTime.Parse(parts[0]),
                     Author = parts[1],
                     LeftOperand = int.Parse(parts[2]),
                     Operation = parts[3],
@@ -62,7 +62,7 @@ namespace CalcServer.Services
 
         private static string CreateLog(CalculationModel model)
         {
-            return $"{model.Date.Ticks} {model.Author} {model.LeftOperand} " +
+            return $"{model.Date:s} {model.Author} {model.LeftOperand} " +
                    $"{model.Operation} {model.RightOperand} {model.Result}";
         }
 

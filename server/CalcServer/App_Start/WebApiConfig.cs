@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 
@@ -14,6 +15,10 @@ namespace CalcServer
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            config.EnableCors();
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
 
             config.Routes.MapHttpRoute(
                 "DefaultApi",
