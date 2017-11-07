@@ -1,5 +1,12 @@
 # Calculator
 
+### Setup
+
+* npm install should be used in the root folder, and nuget restore in the server folder.
+* The app can be run using npm start, and tested with npm test. This works with no server.
+* The server can be run as per a usual C# sln file.
+* To enable interop, set useRemote in src/config.json to true.
+
 ### Operation
 
 * The app can be run using npm start (after npm install), and tested using npm test.
@@ -16,10 +23,4 @@
   To do this, implement the Operator interface, and add it to the App class.
 * Additional users can easily be added by modifying the User state in App.tsx.
   UserType is specified in config.json, and can easily be modified.
-
-### TODO
-
-Ultimately, the pure client side implementation has persistence issue,
-does not support multiple clients, and lacks users functionality.
-
-A simple nancy/web api server would alleviate this.
+* Remote operators are accessed via the server, and so can be added with no client side changes.
