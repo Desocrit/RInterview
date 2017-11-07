@@ -29,10 +29,10 @@ namespace CalcServer.Services
                 {
                     Date = DateTime.Parse(parts[0]),
                     Author = parts[1],
-                    LeftOperand = int.Parse(parts[2]),
+                    LeftOperand = float.Parse(parts[2]),
                     Operation = parts[3],
-                    RightOperand = int.Parse(parts[4]),
-                    Result = int.Parse(parts[5])
+                    RightOperand = float.Parse(parts[4]),
+                    Result = float.Parse(parts[5])
                 };
             }
             catch

@@ -30,5 +30,10 @@ namespace CalcServer.Services
             }
             return calculator.Apply(command.LeftOperand, command.RightOperand);
         }
+
+        public IEnumerable<string> GetSupportedOperations()
+        {
+            return _strategies.Select(x => x.Operation);
+        }
     }
 }

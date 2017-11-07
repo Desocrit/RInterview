@@ -1,4 +1,6 @@
-﻿using CalcServer.Models;
+﻿using System.Collections;
+using System.Collections.Generic;
+using CalcServer.Models;
 
 namespace CalcServer.Services
 {
@@ -8,5 +10,9 @@ namespace CalcServer.Services
         /// <param name="command"> Command to execute. </param>
         /// <returns> The result of execution. </returns>
         float Solve(CalculationCommand command);
+
+        /// <summary> Gets a list of supported operations. </summary>
+        /// <returns> Operations supported by this calculator. </returns>
+        IEnumerable<string> GetSupportedOperations();
     }
 }
