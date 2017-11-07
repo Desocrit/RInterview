@@ -8,7 +8,7 @@ let createLogDetails = function() : LogItemDetails {
         date: new Date(),
         author:'God',
         leftOperand: 4,
-        operator: '+',
+        operation: '+',
         rightOperand: 5,
         result:  6
     }
@@ -51,6 +51,6 @@ it('displays calculation correctly', () => {
         .getElementsByClassName('LogItem')[0]
         .getElementsByClassName('calculation')[0]
         .innerHTML;
-    expect(itemDate).toBe(`${details.leftOperand} ${details.operator}` +
+    expect(itemDate).toBe(`${details.leftOperand} ${details.operation}` +
         ` ${details.rightOperand} = ${details.result}`);
 });

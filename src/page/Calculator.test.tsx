@@ -5,7 +5,7 @@ import Operator from '../operators/Operator'
 
 let operator: Operator = {
     operator: 'X',
-    apply: (x: number, y: number) => x + y + 1
+    apply: (x: number, y: number): Promise <number> => new Promise(r => r(x + y + 1))
 };
 
 function getOperators(): Operator[] {
@@ -17,12 +17,12 @@ it('renders without crashing', () => {
     ReactDOM.render(<Calculator onCalculate={() => {}} operators={getOperators()} />, div);
 });
 
-it('displays operator', () => {
+it('displays operation', () => {
     let operators = getOperators();
     const div = document.createElement('div');
     ReactDOM.render(<Calculator onCalculate={() => {}} operators={operators} />, div);
     let operator = div
-        .getElementsByClassName('operator')[0]
+        .getElementsByClassName('operation')[0]
         .children[0].children[0].children[0]
         .innerHTML;
     expect(operator).toBe(operators[0].operator);
@@ -31,7 +31,7 @@ it('displays operator', () => {
 it('calculates correctly', () => {
     const div = document.createElement('div');
     let local: any = '';
-    ReactDOM.render(<Calculator onCalculate={() => {;}}
+    ReactDOM.render(<Calculator onCalculate={() => {}}
                                 operators={getOperators()} ref={calc => local = calc || local} />, div);
     let element = div.getElementsByClassName('resultsPanel')[0]
         .children[0] as HTMLElement;

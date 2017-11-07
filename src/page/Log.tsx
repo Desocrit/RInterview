@@ -19,15 +19,16 @@ interface LogState {
     filters: {[id: string]: string};
 }
 
+/** Log - handles displaying the previous calculations */
 class Log extends React.Component <LogProps, LogState> {
     createCache(): CachedItems {
         let dates = new Set<string>();
         let operators = new Set<string>();
         let authors = new Set<string>();
         for (let log of this.props.items) {
-            let dateStr: string = log.date.toLocaleDateString();
+            let dateStr: string = new Date(log.date).toLocaleDateString();
             dates.add(dateStr);
-            operators.add(log.operator);
+            operators.add(log.operation);
             authors.add(log.author);
         }
         return {
@@ -75,7 +76,7 @@ class Log extends React.Component <LogProps, LogState> {
     filterItem(item: LogItemDetails) {
         return (!this.state.filters.Author || this.state.filters.Author === item.author)
             && (!this.state.filters.Date || this.state.filters.Date === item.date.toLocaleDateString())
-            && (!this.state.filters.Operator || this.state.filters.Operator === item.operator);
+            && (!this.state.filters.Operator || this.state.filters.Operator === item.operation);
     }
 
     render() {

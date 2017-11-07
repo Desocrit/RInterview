@@ -8,6 +8,7 @@ interface LogItemProps {
     details: LogItemDetails;
 }
 
+/** Each item in the list is handled by this class - mostly for simplification */
 class LogItem extends React.Component <LogItemProps> {
     constructor(props: LogItemProps) {
         super(props);
@@ -15,7 +16,7 @@ class LogItem extends React.Component <LogItemProps> {
 
     getCalculation(): string {
         let calc = this.props.details;
-        return `${calc.leftOperand} ${calc.operator} ${calc.rightOperand} = ${calc.result}`;
+        return `${calc.leftOperand} ${calc.operation} ${calc.rightOperand} = ${calc.result}`;
     }
 
     render() {

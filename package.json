@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.17.0",
     "browser-cookies": "^1.1.0",
     "dateformat": "^3.0.2",
     "muicss": "^0.9.28",
@@ -11,7 +12,9 @@
     "public-ip": "^2.3.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-scripts-ts": "2.8.0"
+    "react-scripts-ts": "2.8.0",
+    "request": "^2.83.0",
+    "unirest": "^0.5.1"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",

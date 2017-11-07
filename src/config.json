@@ -1,3 +1,7 @@
 {
-  "userType": "ip"
+  "userType": "ip",
+  "calculator": "http://localhost:60782/api/calculation",
+  "logStorage": "http",
+  "repository": "http://localhost:60782/api/logs",
+  "useRemote": false
 }

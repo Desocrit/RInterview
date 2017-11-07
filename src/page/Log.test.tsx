@@ -8,7 +8,7 @@ let createLogDetails = function(n: number) : LogItemDetails {
         date: new Date(n, 1, 2, 3, 4),
         author: `Person{n} `,
         leftOperand: n,
-        operator: `+ ${n} +`,
+        operation: `+ ${n} +`,
         rightOperand: n + 3,
         result:  (n * 3) + 3
     }

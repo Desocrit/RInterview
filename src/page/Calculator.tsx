@@ -22,6 +22,7 @@ export interface CalculatorState {
     result: number;
 }
 
+/** The calculator component - uses strategies to display results. */
 class Calculator extends React.Component <CalculatorProps, CalculatorState> {
     static isValid(val: number): boolean {
         return val <= 1 && val >= 0;
@@ -33,13 +34,14 @@ class Calculator extends React.Component <CalculatorProps, CalculatorState> {
         this.setOperator = this.setOperator.bind(this);
         this.setRightOperand = this.setRightOperand.bind(this);
         this.getResult = this.getResult.bind(this);
+        this.setResult = this.setResult.bind(this);
         this.state = {
             active: false,
             valid: true,
             leftOperand: 0,
             operator: this.props.operators[0].operator,
             rightOperand: 0,
-            result: this.props.operators[0].apply(0, 0)
+            result: 0
         };
     }
 
@@ -60,9 +62,15 @@ class Calculator extends React.Component <CalculatorProps, CalculatorState> {
                 && Calculator.isValid(this.state.rightOperand))) {
             return;
         }
-        let result = this.props.operators.filter(v => v.operator === this.state.operator)[0]
-            .apply(this.state.leftOperand, this.state.rightOperand);
-        this.setState({result: result, active: true}, () => this.props.onCalculate(this.state));
+        let operator = this.props.operators.filter(v => v.operator === this.state.operator)[0];
+        operator
+            .apply(this.state.leftOperand, this.state.rightOperand)
+            .then(this.setResult, e => { throw e; });
+
+    }
+
+    setResult(result: number) {
+        this.setState({result: result, active: true}, () => this.props.onCalculate(this.state)) ;
     }
 
     render() {

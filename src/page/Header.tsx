@@ -2,6 +2,7 @@ import * as React from 'react';
 import './Header.css';
 const Appbar = require('muicss/lib/react/appbar');
 
+/** Basic header component - no interactivity. */
 class Header extends React.Component {
     render() {
         return (
