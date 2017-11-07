@@ -14,10 +14,10 @@ namespace CalcServer.Services
         public FileLogger(string fileLocation)
         {
             _fileLocation = fileLocation;
-            if (!File.Exists(fileLocation))
-            {
-                File.Create(fileLocation);
-            }
+            if (File.Exists(fileLocation)) return;
+
+            FileStream handle = File.Create(fileLocation);
+            handle.Dispose();
         }
 
         private static CalculationModel GetCalculationModel(string log)
@@ -42,20 +42,21 @@ namespace CalcServer.Services
         }
 
         /// <inheritdoc />
-        public Task<IEnumerable<CalculationModel>> GetLogs()
+        public async Task<IEnumerable<CalculationModel>> GetLogs()
         {
             using (StreamReader reader = File.OpenText(_fileLocation))
             {
-                return reader.ReadToEndAsync()
-                    .ContinueWith(t => GetModel(t.Result));
+                string content = await reader.ReadToEndAsync().ConfigureAwait(false);
+                return GetModel(content);
             }
         }
 
-        private IEnumerable<CalculationModel> GetModel(string file)
+        private static IEnumerable<CalculationModel> GetModel(string file)
         {
             return file
                 .Split(new[] {Environment.NewLine}, StringSplitOptions.None)
                 .Reverse()
+                .Where(l => !string.IsNullOrWhiteSpace(l))
                 .Select(GetCalculationModel).ToList();
         }
 

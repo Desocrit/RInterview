@@ -7,7 +7,7 @@ using CalcServer.Services;
 namespace CalcServer.Controllers
 {
 	/// <inheritdoc />
-    [RoutePrefix("logs")]
+    [RoutePrefix("api/logs")]
     public class LogController : ApiController
     {
         private readonly ICalculationLogger _logger;
