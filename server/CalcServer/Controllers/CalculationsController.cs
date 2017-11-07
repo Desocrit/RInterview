@@ -14,16 +14,14 @@ namespace CalcServer.Controllers
     public class CalculationsController : ApiController
     {
         private readonly ICalculator _calculator;
-        private readonly ICalculationLogger _logger;
 
         /// <summary> Constructs a new instance. </summary>
         /// <param name="calculator"> Calculator used to perform calculations. </param>
         /// <param name="logger"> Logger used to log calculations </param>
         /// <inheritdoc />
-        public CalculationsController(ICalculator calculator, ICalculationLogger logger)
+        public CalculationsController(ICalculator calculator)
         {
             _calculator = calculator;
-            _logger = logger;
         }
 
         [HttpGet]

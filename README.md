@@ -5,6 +5,8 @@
 * npm install should be used in the root folder, and nuget restore in the server folder.
 * The app can be run using npm start, and tested with npm test. This works with no server.
 * The server can be run as per a usual C# sln file.
+* The server APIS can be used directly - GET api/calculation for calculations, POST api/logs to log.
+* Configuration is found in src/config.json for ts, or server/Web.config for c#.
 * To enable interop, set useRemote in src/config.json to true.
 
 ### Operation
