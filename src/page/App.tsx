@@ -13,12 +13,12 @@ const cookies = require('browser-cookies');
 const publicIp = require('public-ip');
 
 interface AppProps {
-    isOnline: boolean;
+    userType: string;
 }
 
 interface AppState {
     logs: LogItemDetails[];
-    ip: string;
+    user: string;
     cookie: string;
 }
 
@@ -36,19 +36,19 @@ class App extends React.Component <AppProps, AppState> {
         this.state = {
             logs: cookie ? cookie.split('\n')
                 .map((c: string) => new LogItemDetails(c)) : [],
-            ip: 'unknown',
+            user: 'unknown',
             cookie: cookie ? cookie : ''
         };
 
-        if (this.props.isOnline) {
-            publicIp.v4().then((ip: string) => this.setState({ip: ip}));
+        if (this.props.userType === 'ip') {
+            publicIp.v4().then((ip: string) => this.setState({user: ip}));
         }
     }
 
     onCalculate(state: CalculatorState): void {
         let newItem: LogItemDetails = {
             date: new Date(),
-            author: this.state.ip,
+            author: this.state.user,
             leftOperand: state.leftOperand,
             operator: state.operator,
             rightOperand: state.rightOperand,
