@@ -10,7 +10,7 @@ namespace CalcServer.Services
     {
         /// <summary> Logs a calculation as having occurred. </summary>
         /// <param name="model"> Calculation model to use. </param>
-        void LogCalculation(CalculationModel model);
+        Task LogCalculation(CalculationModel model);
 
         /// <summary> Gets the logs stored in a file. </summary>
         /// <returns> An enumerable of all logs stored in a file. </returns>

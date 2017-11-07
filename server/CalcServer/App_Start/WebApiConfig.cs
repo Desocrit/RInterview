@@ -1,4 +1,6 @@
 ﻿using System.Web.Http;
+using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
 
 namespace CalcServer
 {
@@ -7,6 +9,8 @@ namespace CalcServer
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            Container container = new DiConfig().GetContainer();
+            config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

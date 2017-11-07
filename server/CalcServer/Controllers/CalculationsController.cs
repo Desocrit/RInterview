@@ -6,7 +6,7 @@ using CalcServer.Services;
 
 namespace CalcServer.Controllers
 {
-    [RoutePrefix("calculation")]
+    [RoutePrefix("api/calculation")]
     public class CalculationsController : ApiController
     {
         private readonly ICalculator _calculator;
@@ -24,7 +24,7 @@ namespace CalcServer.Controllers
 
         [HttpPost]
         [Route("")]
-        public Task<int> Solve(CalculationCommand command)
+        public async Task<int> Solve(CalculationCommand command)
         {
             int result = _calculator.Solve(command);
             string author = HttpContext.Current.Request.UserHostAddress;
@@ -36,8 +36,9 @@ namespace CalcServer.Controllers
                 Author = author,
                 Result = result
             };
-            _logger.LogCalculation(model);
-            return Task.FromResult(result);
+            // This should be done in a background thread in a real app.
+            await _logger.LogCalculation(model);
+            return result;
         }
     }
 }

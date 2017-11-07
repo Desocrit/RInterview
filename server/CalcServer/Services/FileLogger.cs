@@ -2,36 +2,37 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using CalcServer.Models;
 
 namespace CalcServer.Services
 {
     public class FileLogger : ICalculationLogger
     {
-        private readonly IList<CalculationModel> logs;
+        private readonly string _fileLocation;
 
         public FileLogger(string fileLocation)
         {
-            if (File.Exists(fileLocation))
-            {
-                logs = File.ReadAllLines(fileLocation).Reverse()
-                    .Select(l => );
-            }
-            else
+            _fileLocation = fileLocation;
+            if (!File.Exists(fileLocation))
             {
                 File.Create(fileLocation);
-                logs = new List<CalculationModel>();
             }
         }
 
-        private CalculationModel GetCalculationModel(string log)
+        private static CalculationModel GetCalculationModel(string log)
         {
             try
             {
-                var parts = log.Split(' ');
+                string[] parts = log.Split(' ');
                 return new CalculationModel
                 {
-                    Date
+                    Date = new DateTime(int.Parse(parts[0])),
+                    Author = parts[1],
+                    LeftOperand = int.Parse(parts[2]),
+                    Operation = parts[3],
+                    RightOperand = int.Parse(parts[4]),
+                    Result = int.Parse(parts[5])
                 };
             }
             catch
@@ -40,9 +41,38 @@ namespace CalcServer.Services
             }
         }
 
-        public void LogCalculation(CalculationModel model)
+        /// <inheritdoc />
+        public Task<IEnumerable<CalculationModel>> GetLogs()
         {
-            throw new System.NotImplementedException();
+            using (StreamReader reader = File.OpenText(_fileLocation))
+            {
+                return reader.ReadToEndAsync()
+                    .ContinueWith(t => GetModel(t.Result));
+            }
+        }
+
+        private IEnumerable<CalculationModel> GetModel(string file)
+        {
+            return file
+                .Split(new[] {Environment.NewLine}, StringSplitOptions.None)
+                .Reverse()
+                .Select(GetCalculationModel).ToList();
+        }
+
+        private static string CreateLog(CalculationModel model)
+        {
+            return $"{model.Date.Ticks} {model.Author} {model.LeftOperand} " +
+                   $"{model.Operation} {model.RightOperand} {model.Result}";
+        }
+
+        /// <inheritdoc />
+        public Task LogCalculation(CalculationModel model)
+        {
+            string log = CreateLog(model);
+            using (StreamWriter sw = File.AppendText(_fileLocation))
+            {
+                return sw.WriteLineAsync(log);
+            }
         }
     }
 }
