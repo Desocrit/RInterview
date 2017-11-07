@@ -1,7 +1,6 @@
 # TODO:
 
-* Validation
-* More Tests
+* Server side code.
 * Users
 * Web API
 * Client/Server options.

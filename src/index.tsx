@@ -4,7 +4,7 @@ import App from './page/App';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-  <App />,
+  <App isOnline={true}/>,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();

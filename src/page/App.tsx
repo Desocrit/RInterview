@@ -12,7 +12,9 @@ const cookies = require('browser-cookies');
 
 const publicIp = require('public-ip');
 
-interface AppProps {}
+interface AppProps {
+    isOnline: boolean;
+}
 
 interface AppState {
     logs: LogItemDetails[];
@@ -37,7 +39,10 @@ class App extends React.Component <AppProps, AppState> {
             ip: 'unknown',
             cookie: cookie ? cookie : ''
         };
-        publicIp.v4().then((ip: string) => this.setState({ip: ip}));
+
+        if (this.props.isOnline) {
+            publicIp.v4().then((ip: string) => this.setState({ip: ip}));
+        }
     }
 
     onCalculate(state: CalculatorState): void {
