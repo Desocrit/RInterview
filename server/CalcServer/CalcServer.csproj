@@ -93,9 +93,12 @@
     <Compile Include="Models\CalculationCommand.cs" />
     <Compile Include="Models\CalculationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AggregateCalculator.cs" />
     <Compile Include="Services\CombinedWith.cs" />
     <Compile Include="Services\Either.cs" />
+    <Compile Include="Services\FileLogger.cs" />
     <Compile Include="Services\IBinaryCalculation.cs" />
+    <Compile Include="Services\ICalculationLogger.cs" />
     <Compile Include="Services\ICalculator.cs" />
   </ItemGroup>
   <ItemGroup>

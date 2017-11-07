@@ -1,14 +1,14 @@
 ﻿namespace CalcServer.Services
 {
-    public class Either : IBinaryCalculation
+    public class CombinedWith : IBinaryCalculation
     {
         /// <inheritdoc />
-        public string Operand => "Either";
+        public string Operation => "CombinedWith";
 
         /// <inheritdoc />
         public int Apply(int leftOperand, int rightOperand)
         {
-            return leftOperand+rightOperand - leftOperand*rightOperand;
+            return leftOperand * rightOperand;
         }
     }
 }

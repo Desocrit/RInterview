@@ -1,4 +1,6 @@
-﻿namespace CalcServer.Models
+﻿using System;
+
+namespace CalcServer.Models
 {
     /// <summary> Model of a performed calculation, for logging. </summary>
     /// <inheritdoc cref="CalculationCommand"/>
@@ -9,5 +11,8 @@
 
         /// <summary> User executing the calculation. </summary>
         public string Author { get; set; }
+
+        /// <summary> Date the calculation occurred. </summary>
+        public DateTime Date { get; set; }
     }
 }

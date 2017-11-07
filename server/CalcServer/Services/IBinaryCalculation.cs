@@ -6,8 +6,8 @@
     public interface IBinaryCalculation
     {
         /// <summary> Gets the operand of this calculation. </summary>
-        /// <returns> Operand </returns>
-        string Operand { get; }
+        /// <returns> Operation </returns>
+        string Operation { get; }
 
         /// <summary> Executes the calculation. </summary>
         /// <param name="leftOperand"> Left operand. </param>
