@@ -8,6 +8,7 @@ import Either from '../operators/Either';
 import Operator from '../operators/Operator';
 import CombinedWith from '../operators/CombinedWith';
 import { CalculatorState } from './Calculator';
+const cookies = require('browser-cookies');
 
 const publicIp = require('public-ip');
 
@@ -16,9 +17,12 @@ interface AppProps {}
 interface AppState {
     logs: LogItemDetails[];
     ip: string;
+    cookie: string;
 }
 
 class App extends React.Component <AppProps, AppState> {
+    static readonly COOKIE_NAME: string = 'red_log';
+
     static getOperators(): Operator[] {
         return [new Either() as Operator, new CombinedWith() as Operator];
     }
@@ -26,9 +30,12 @@ class App extends React.Component <AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
         this.onCalculate = this.onCalculate.bind(this);
+        let cookie = cookies.get(App.COOKIE_NAME, {signed: true});
         this.state = {
-            logs: [],
-            ip: 'unknown'
+            logs: cookie ? cookie.split('\n')
+                .map((c: string) => new LogItemDetails(c)) : [],
+            ip: 'unknown',
+            cookie: cookie ? cookie : ''
         };
         publicIp.v4().then((ip: string) => this.setState({ip: ip}));
     }
@@ -42,9 +49,16 @@ class App extends React.Component <AppProps, AppState> {
             rightOperand: state.rightOperand,
             result: state.result
         };
+        let newCookie = LogItemDetails.asCookie(newItem);
+        if (this.state.cookie) {
+            newCookie = `${newCookie}\n${this.state.cookie}`;
+        }
         this.setState({
-            logs: [newItem].concat(this.state.logs)
+            logs: [newItem].concat(this.state.logs),
+            cookie: newCookie
         });
+        cookies.set(App.COOKIE_NAME, newCookie,
+                    {expires: 365, signed: true});
     }
 
     render() {
