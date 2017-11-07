@@ -24,3 +24,10 @@
 * Additional users can easily be added by modifying the User state in App.tsx.
   UserType is specified in config.json, and can easily be modified.
 * Remote operators are accessed via the server, and so can be added with no client side changes.
+
+### Concerns
+
+* While enough tests have been provided for an example, test coverage is far too low for a real project.
+* Deadlock could be formed if multiple server threads hog the lock on the log file.
+* Error handling on the client side is somewhat poor - many errors are not fixed.
+  This could be improved by falling back to client side code if server requests fail.
